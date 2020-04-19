@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField]
+    private float Epsilon = 0.001f;
+
+    [SerializeField]
     private Transform _target;
 
     private SpriteRenderer spriteRenderer;
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         
     }
@@ -49,15 +52,18 @@ public class PlayerController : MonoBehaviour
             sizeScale = GetScale();
             transform.localScale = scale * sizeScale;
         }
-        UpdateFacingDirection();
+        UpdateAnimation();
     }
 
-    private void UpdateFacingDirection()
+    private void UpdateAnimation()
     {
 
         if (path != null && targetIndex < path.Length)
         {
             var vec = GetFacingDirection(transform.position, path[targetIndex]);
+
+            animator.SetBool("isMoving", vec.magnitude > Epsilon);
+            
             bool flipSpriteX = (spriteRenderer.flipX ? (vec.x < DirectionChangeSensitivity) : (vec.x > DirectionChangeSensitivity));
             if (flipSpriteX)
             {

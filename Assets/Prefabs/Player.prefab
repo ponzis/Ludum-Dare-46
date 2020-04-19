@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 361466434755912813}
   - component: {fileID: 361466434755912810}
-  - component: {fileID: 361466434755912812}
-  - component: {fileID: 3191982713924380450}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Player
@@ -85,46 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &361466434755912812
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 361466434755912811}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a0d0489ad33d18841b088c7c06ee35f2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!50 &3191982713924380450
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 361466434755912811}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!1 &361466435257615448
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +95,7 @@ GameObject:
   - component: {fileID: 361466435257615451}
   - component: {fileID: 2450118892164965298}
   - component: {fileID: -8699129680718118408}
+  - component: {fileID: 2932376474084491765}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -177,6 +136,7 @@ MonoBehaviour:
   ChangeScale: 0
   DirectionChangeSensitivity: 0.01
   TargetOffset: {x: 0.25, y: 0}
+  Epsilon: 0.001
   _target: {fileID: 0}
 --- !u!60 &2450118892164965298
 PolygonCollider2D:
@@ -229,6 +189,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &2932376474084491765
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361466435257615448}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a0d0489ad33d18841b088c7c06ee35f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &361466435319066238
 GameObject:
   m_ObjectHideFlags: 0
