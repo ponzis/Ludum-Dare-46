@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +9,20 @@ public class PlayerController : MonoBehaviour
     [Min(0)]
     public float MovementSpeed = 2.0f;
 
+    [Range(0, 1)]
+    public float DepthScale = 0.5f;
+    public float Scaleoffset = 0.0f;
+    public bool ChangeScale = false;
+
+
     [SerializeField]
     private Transform _target;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    private Vector3 scale;
+    private float sizeScale;
 
     void Awake()
     {
@@ -21,19 +30,41 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Start()
+    private void Update()
     {
-        StartCoroutine(RefreshPath());
-    }
-    public void MoveTo(Vector2 newPosition)
-    {
-        _target.position = newPosition;
+        if (ChangeScale)
+        {
+            transform.localScale = GetScale();
+        }
     }
 
+    private Vector3 GetScale()
+    {   
+        var newSizeScale = Mathf.Abs(transform.position.y + Scaleoffset) * DepthScale;
+        if (sizeScale != newSizeScale)
+        {        
+            sizeScale = newSizeScale;      
+        }
+        return scale * sizeScale;
+    }
+
+    private float GetMovementSpeed()
+    {
+        if (ChangeScale)
+        {
+            return sizeScale * MovementSpeed;
+        }
+        return MovementSpeed;
+    }
+
+    void Start()
+    {
+        scale = transform.localScale;
+        StartCoroutine(RefreshPath());
+    }
 
     Vector2[] path;
     int targetIndex;
-
 
     IEnumerator FollowPath()
     {
@@ -53,8 +84,7 @@ public class PlayerController : MonoBehaviour
                     }
                     currentWaypoint = path[targetIndex];
                 }
-
-                transform.position = Vector2.MoveTowards(transform.position, currentWaypoint, MovementSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, currentWaypoint, GetMovementSpeed() * Time.deltaTime);
                 yield return null;
 
             }
@@ -63,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator RefreshPath()
     {
-        var targetPositionOld = (Vector2)_target.position + Vector2.up; 
+        var targetPositionOld = (Vector2)_target.position + Vector2.up;
 
         while (true)
         {
@@ -83,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if(path != null)
+        if (path != null)
         {
             for (int i = targetIndex; i < path.Length; i++)
             {
