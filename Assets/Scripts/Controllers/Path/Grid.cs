@@ -44,7 +44,7 @@ public class Grid : MonoBehaviour
 
     public List<Node> GetNeighbours(Node node, int depth = 1)
     {
-        List<Node> neighbours = new List<Node>();
+        var neighbours = new List<Node>();
 
         for (int x = -depth; x <= depth; x++)
         {
