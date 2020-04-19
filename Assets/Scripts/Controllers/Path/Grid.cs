@@ -89,7 +89,7 @@ public class Grid : MonoBehaviour
     Node FindWalkableInRadius(int centreX, int centreY, int radius)
     {
 
-        for (int i = -radius; i <= radius; i++)
+        for (int i = -radius; i < radius; i++)
         {
             int verticalSearchX = i + centreX;
             int horizontalSearchY = i + centreY;
