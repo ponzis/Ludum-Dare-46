@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System;
+using System.Linq;
 
 public class Pathfinding : Singleton<Pathfinding>
 {
-
     Grid grid;
 
     void Awake()
@@ -18,18 +18,14 @@ public class Pathfinding : Singleton<Pathfinding>
     {
         return Instance.FindPath(from, to);
     }
-
     Vector2[] FindPath(Vector2 from, Vector2 to)
     {
-
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
-
         var waypoints = new Vector2[0];
         var pathSuccess = false;
 
         Node startNode = grid.NodeFromWorldPoint(from);
         Node targetNode = grid.NodeFromWorldPoint(to);
+
         startNode.parent = startNode;
 
         if (!startNode.walkable)
@@ -55,8 +51,6 @@ public class Pathfinding : Singleton<Pathfinding>
 
                 if (currentNode == targetNode)
                 {
-                    sw.Stop();
-                    print("Path found: " + sw.ElapsedMilliseconds + " ms");
                     pathSuccess = true;
                     break;
                 }
@@ -66,7 +60,7 @@ public class Pathfinding : Singleton<Pathfinding>
                     if (!neighbour.walkable || closedSet.Contains(neighbour))
                         continue;
 
-                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) + TurningCost(currentNode, neighbour);
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
                     if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                     {
                         neighbour.gCost = newMovementCostToNeighbour;
@@ -82,16 +76,10 @@ public class Pathfinding : Singleton<Pathfinding>
             }
         }
         if (pathSuccess)
+        {
             waypoints = RetracePath(startNode, targetNode);
-
+        }
         return waypoints;
-
-    }
-
-
-    int TurningCost(Node from, Node to)
-    {
-        return 0;
     }
 
     Vector2[] RetracePath(Node startNode, Node endNode)
@@ -134,6 +122,4 @@ public class Pathfinding : Singleton<Pathfinding>
             return 14 * dstY + 10 * (dstX - dstY);
         return 14 * dstX + 10 * (dstY - dstX);
     }
-
-
 }
