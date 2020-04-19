@@ -16,7 +16,7 @@ public class LoadingScreen : Singleton<LoadingScreen>
     }
     private void Configure()
     {
-        percentLoadedText.gameObject.SetActive(!hidePercentageText);
+        percentLoadedText?.gameObject.SetActive(!hidePercentageText);
     }
     private void Update()
     {
@@ -32,7 +32,8 @@ public class LoadingScreen : Singleton<LoadingScreen>
 
     private void SetProgress(float progress)
     {
-        percentLoadedText.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
+        if (percentLoadedText != null)
+            percentLoadedText.text = Mathf.CeilToInt(progress * 100).ToString() + "%";
     }
 
     public void Show(AsyncOperation loadingOperation)

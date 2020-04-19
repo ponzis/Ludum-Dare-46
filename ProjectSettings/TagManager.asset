@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - Unwalkable
-  - 
+  - IndexTriggers
   - 
   - 
   - 
@@ -44,8 +44,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BelowPlayer
+    uniqueID: 1322827991
+    locked: 0
   - name: Player
     uniqueID: 1768633009
+    locked: 0
+  - name: AbovePlayer
+    uniqueID: 1915061969
     locked: 0
   - name: Foreground
     uniqueID: 2765409341
