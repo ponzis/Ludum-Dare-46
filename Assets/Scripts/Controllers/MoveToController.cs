@@ -5,24 +5,12 @@ using UnityEngine;
 public class MoveToController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public PlayerController player;
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Transform playerMoveTarget;
 
     private void OnMouseDown()
     {
 
-        var location = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        player.MoveTo(location);
-
+        var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        playerMoveTarget.position = position;
     }
 }
