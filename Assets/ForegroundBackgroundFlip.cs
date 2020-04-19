@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class ForegroundBackgroundFlip : MonoBehaviour
@@ -12,31 +14,41 @@ public class ForegroundBackgroundFlip : MonoBehaviour
     [Min(0)]
     public float Range = 0.05f;
 
+    public float Offset = 0.0f;
 
-    private int oldIndex; 
+    public string AbovePlayerLayer = "AbovePlayer";
+    public string NormalLayer;
+    public string BelowPlayerLayer = "BelowPlayer";
+
+    [SerializeField, ReadOnly]
+    private float ZIndex;
+
     public void FlipZIndex(int sortingOrder, Vector2 pos, bool enter = false)
     {
-        if (enter &&  (Mathf.Abs(pos.y - transform.position.y) > Range))
+        var loc = pos.y - transform.position.y + Offset; 
+        if (enter && Mathf.Abs(loc) > Range)
         {
-            oldIndex = SortingOrder;
-            if (pos.y > transform.position.y)
+            ZIndex = pos.y - transform.position.y;
+            if (loc > 0.0f)
             {
-                spriteRenderer.sortingOrder = sortingOrder + 1;
+                spriteRenderer.sortingLayerName = AbovePlayerLayer;
             }
             else
             {
-                spriteRenderer.sortingOrder = sortingOrder - 1;
+                spriteRenderer.sortingLayerName = BelowPlayerLayer;
             }
         }
         else
         {
-            spriteRenderer.sortingOrder = oldIndex;
+            spriteRenderer.sortingLayerName = NormalLayer;
         }
     }
 
     private void Awake()
     {
+        
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        NormalLayer = spriteRenderer.sortingLayerName;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

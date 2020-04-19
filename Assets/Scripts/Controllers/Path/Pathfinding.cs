@@ -14,6 +14,7 @@ public class Pathfinding : Singleton<Pathfinding>
 
     public static Vector2[] RequestPath(Vector2 from, Vector2 to)
     {
+        if (Instance == null) return null;
         return Instance.FindPath(from, to);
     }
     Vector2[] FindPath(Vector2 from, Vector2 to)
