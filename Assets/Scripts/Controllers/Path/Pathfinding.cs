@@ -85,7 +85,7 @@ public class Pathfinding : Singleton<Pathfinding>
         var path = new List<Node>();
         var currentNode = endNode;
 
-        while (currentNode != startNode)
+        while (currentNode != null && currentNode != startNode)
         {
             path.Add(currentNode);
             currentNode = currentNode.parent;

@@ -5,26 +5,30 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    protected Transform colider;
+    protected PlayerController player;
 
-    protected virtual void ExecuteDoor(Transform colider)
+    protected virtual void ExecuteDoor(PlayerController colider)
     {
 
     }
 
     private void OnMouseDown()
     {
-        ExecuteDoor(colider);
+        ExecuteDoor(player);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        colider = collision.gameObject.transform;
+        var comp = collision.GetComponent<PlayerController>();
+        if(comp != null)
+            player = comp;
 
     }
 
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        colider = null;
+        var comp = collision.GetComponent<PlayerController>();
+        if (comp != null)
+            player = null;
     }
 }

@@ -9,20 +9,23 @@ public class ForegroundBackgroundFlip : MonoBehaviour
 
     public int SortingOrder { get => spriteRenderer.sortingOrder; }
 
+    [Min(0)]
+    public float Range = 0.05f;
+
 
     private int oldIndex; 
     public void FlipZIndex(int sortingOrder, Vector2 pos, bool enter = false)
     {
-        if (enter)
+        if (enter &&  (Mathf.Abs(pos.y - transform.position.y) > Range))
         {
             oldIndex = SortingOrder;
-            if (pos.y < transform.position.y)
+            if (pos.y > transform.position.y)
             {
-                spriteRenderer.sortingOrder = sortingOrder - 1;
+                spriteRenderer.sortingOrder = sortingOrder + 1;
             }
             else
             {
-                spriteRenderer.sortingOrder = sortingOrder + 1;
+                spriteRenderer.sortingOrder = sortingOrder - 1;
             }
         }
         else
@@ -35,5 +38,23 @@ public class ForegroundBackgroundFlip : MonoBehaviour
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
-    
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        var player = collision.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            FlipZIndex(player.SortingOrder, player.Position, true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var player = collision.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            FlipZIndex(player.SortingOrder, player.Position);
+        }
+    }
+
 }

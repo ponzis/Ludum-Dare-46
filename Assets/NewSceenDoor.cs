@@ -6,7 +6,7 @@ public class NewSceenDoor : Door
 {
     public string NextSceen;
 
-    protected override void ExecuteDoor(Transform colider)
+    protected override void ExecuteDoor(PlayerController colider)
     {
         if (colider != null) GoToNextSceen();
     }

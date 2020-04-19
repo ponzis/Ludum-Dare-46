@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 scale;
     private float sizeScale;
 
+
+    public int SortingOrder { get => spriteRenderer.sortingOrder; }
+    public Vector2 Position { get => transform.position; }
+
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -68,23 +72,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        var fliper = collision.gameObject.GetComponent<ForegroundBackgroundFlip>();
-        if (fliper != null)
-        {
-            fliper.FlipZIndex(spriteRenderer.sortingOrder, transform.position, true);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        var fliper = collision.gameObject.GetComponent<ForegroundBackgroundFlip>();
-        if (fliper != null)
-        {
-            fliper.FlipZIndex(spriteRenderer.sortingOrder, transform.position);
-        }
-    }
 
     private float GetScale()
     {
@@ -117,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        if (path.Length > 0)
+        if (path != null && path.Length > 0)
         {
             targetIndex = 0;
             Vector2 currentWaypoint = path[0];

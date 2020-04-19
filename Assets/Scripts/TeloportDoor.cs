@@ -7,11 +7,11 @@ public class TeloportDoor : Door
 {
     public Transform NextPosition;
 
-    protected override void ExecuteDoor(Transform colider)
+    protected override void ExecuteDoor(PlayerController colider)
     {
         if (colider != null)
         {
-            colider.position = NextPosition.position;
+            colider.transform.position = NextPosition.position;
         }
     }
 }
