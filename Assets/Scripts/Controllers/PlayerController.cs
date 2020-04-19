@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,43 +25,15 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(RefreshPath());
     }
-
-
-
-    // Update is called once per frame
-    //void FixedUpdate()
-    //{
-    //    rb2d.position = Vector3.Slerp(rb2d.position, _targetPosition, MovementSpeed * Time.fixedDeltaTime);
-    //}
-
     public void MoveTo(Vector2 newPosition)
     {
-        Debug.Log(newPosition);
         _target.position = newPosition;
-
     }
 
-    IEnumerator RefreshPath()
-    {
-        Vector2 targetPositionOld = new Vector2(_target.position.x, _target.position.y) + Vector2.up; // ensure != to target.position initially
-
-        while (true)
-        {
-            if (targetPositionOld != (Vector2)_target.position)
-            {
-                targetPositionOld = _target.position;
-
-                path = Pathfinding.RequestPath(transform.position, _target.position);
-                StopCoroutine("FollowPath");
-                StartCoroutine("FollowPath");
-            }
-
-            yield return new WaitForSeconds(.25f);
-        }
-    }
 
     Vector2[] path;
     int targetIndex;
+
 
     IEnumerator FollowPath()
     {
@@ -88,15 +61,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator RefreshPath()
+    {
+        var targetPositionOld = (Vector2)_target.position + Vector2.up; 
+
+        while (true)
+        {
+            if (targetPositionOld != (Vector2)_target.position)
+            {
+                targetPositionOld = _target.position;
+
+                path = Pathfinding.RequestPath(transform.position, _target.position);
+                StopCoroutine("FollowPath");
+                StartCoroutine("FollowPath");
+            }
+
+            yield return new WaitForSeconds(.25f);
+        }
+    }
+
+
     public void OnDrawGizmos()
     {
-        if (path != null)
+        if(path != null)
         {
             for (int i = targetIndex; i < path.Length; i++)
             {
                 Gizmos.color = Color.black;
-                //Gizmos.DrawCube((Vector3)path[i], Vector3.one *.5f);
-
                 if (i == targetIndex)
                 {
                     Gizmos.DrawLine(transform.position, path[i]);
