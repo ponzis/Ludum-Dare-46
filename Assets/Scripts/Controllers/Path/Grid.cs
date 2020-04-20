@@ -7,8 +7,10 @@ public class Grid : MonoBehaviour
 
     public bool displayGridGizmos;
 
+    public GameObject unwalkableObjectRoot;
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
+    [Min(0.01f)]
     public float nodeRadius;
 
     Node[,] grid;
@@ -21,6 +23,33 @@ public class Grid : MonoBehaviour
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
         CreateGrid();
+        DisableLayer(unwalkableObjectRoot, unwalkableMask);
+    }
+
+
+    private static void DisableLayer(GameObject root, LayerMask layerMask)
+    {
+        if (root == null) return;
+        var layer = Mathf.RoundToInt(Mathf.Log(layerMask, 2));
+        var layerObjects = GetObjectsInLayer(root, layer);
+        foreach (var item in layerObjects)
+        {
+            item.SetActive(false);
+        }
+    }
+    private static List<GameObject> GetObjectsInLayer(GameObject root, int layer)
+    {
+        if (root == null) return null;
+        var ret = new List<GameObject>();
+
+        foreach (var t in root.transform.GetComponentsInChildren<Transform>())
+        {
+            if (t.gameObject.layer == layer)
+            {
+                ret.Add(t.gameObject);
+            }
+        }
+        return ret;
     }
 
     public int MaxSize { get => gridSizeX * gridSizeY; }
@@ -34,7 +63,7 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                Vector2 worldPoint = worldBottomLeft + Vector2.right * (x * nodeDiameter + nodeRadius) + Vector2.up * (y * nodeDiameter + nodeRadius);
+                Vector2 worldPoint = worldBottomLeft + Vector2.right * (x * nodeDiameter + nodeRadius) + Vector2.up * (float)(y * nodeDiameter + nodeRadius);
                 bool walkable = (Physics2D.OverlapCircle(worldPoint, nodeRadius, unwalkableMask) == null); // if no collider2D is returned by overlap circle, then this node is walkable
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
@@ -108,14 +137,14 @@ public class Grid : MonoBehaviour
                     return grid[verticalSearchX, centreY - radius];
             }
             // right
-            if (InBounds(centreY + radius, horizontalSearchY))
+            if (InBounds(centreX + radius, horizontalSearchY))
             {
                 if (grid[centreX + radius, horizontalSearchY].walkable)
                     return grid[centreX + radius, horizontalSearchY];
             }
 
             // left
-            if (InBounds(centreY - radius, horizontalSearchY))
+            if (InBounds(centreX - radius, horizontalSearchY))
             {
                 if (grid[centreX - radius, horizontalSearchY].walkable)
                     return grid[centreX - radius, horizontalSearchY];
@@ -140,7 +169,7 @@ public class Grid : MonoBehaviour
                 if (n.walkable)
                     Gizmos.color = Color.white;
 
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter * .5f));
             }
         }
     }

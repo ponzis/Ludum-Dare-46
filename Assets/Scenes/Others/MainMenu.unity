@@ -501,7 +501,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2072551583}
+      - m_Target: {fileID: 1653482233}
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -905,6 +905,7 @@ GameObject:
   - component: {fileID: 1653482231}
   - component: {fileID: 1653482230}
   - component: {fileID: 1653482235}
+  - component: {fileID: 1653482233}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -994,6 +995,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1653482233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653482228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b4ebcfc01a546429ad7d610473b25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstLevel: Level_1
 --- !u!114 &1653482235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,9 +1498,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2072551583}
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 1653482233}
+        m_MethodName: StartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1546,7 +1560,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &2072551583
 MonoBehaviour:
