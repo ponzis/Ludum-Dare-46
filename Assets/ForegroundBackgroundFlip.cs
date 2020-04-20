@@ -7,48 +7,72 @@ using UnityEngine;
 public class ForegroundBackgroundFlip : MonoBehaviour
 {
 
-    private SpriteRenderer spriteRenderer;
-
-    public int SortingOrder { get => spriteRenderer.sortingOrder; }
 
     [Min(0)]
     public float Range = 0.05f;
 
     public float Offset = 0.0f;
 
-    public string AbovePlayerLayer = "AbovePlayer";
-    public string NormalLayer;
-    public string BelowPlayerLayer = "BelowPlayer";
+    [SerializeField]
+    private bool ShowFlipLine;
+    [SerializeField]
+    private float LineWidth;
 
     [SerializeField, ReadOnly]
     private float ZIndex;
 
-    public void FlipZIndex(int sortingOrder, Vector2 pos, bool enter = false)
+    private bool _isFliped;
+    private bool _isInfront;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private Vector2 Position { get => (Vector2)transform.position + new Vector2(0, Offset); }
+
+    public void UpdateIndex(int sortingOrder, Vector2 pos)
     {
-        var loc = pos.y - transform.position.y + Offset; 
-        if (enter && Mathf.Abs(loc) > Range)
+        if(!_isFliped && !InRange(pos.y, Position.y, Range))
         {
-            ZIndex = pos.y - transform.position.y;
-            if (loc > 0.0f)
+            if (pos.y > Position.y)
             {
-                spriteRenderer.sortingLayerName = AbovePlayerLayer;
+                _isInfront = false;
+                _spriteRenderer.sortingOrder = sortingOrder + 1;
             }
             else
             {
-                spriteRenderer.sortingLayerName = BelowPlayerLayer;
+                _isInfront = true;
+                _spriteRenderer.sortingOrder = sortingOrder - 1;
             }
-        }
-        else
+            ZIndex = pos.y - Position.y;
+            _isFliped = false;
+        }  
+    }
+
+    private void ResetIndex(int sortingOrder)
+    {
+        if (_isFliped)
         {
-            spriteRenderer.sortingLayerName = NormalLayer;
+            if (_isInfront)
+            {
+                _spriteRenderer.sortingOrder = sortingOrder + 1;
+            }
+            else
+            {
+                _spriteRenderer.sortingOrder = sortingOrder - 1;
+            }       
+            _isFliped = false;
         }
+        
+    }
+
+    private bool InRange(float a, float b, float range)
+    {
+        return Mathf.Abs(a - b) <= range;
     }
 
     private void Awake()
     {
         
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        NormalLayer = spriteRenderer.sortingLayerName;
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -56,7 +80,7 @@ public class ForegroundBackgroundFlip : MonoBehaviour
         var player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
-            FlipZIndex(player.SortingOrder, player.Position, true);
+            UpdateIndex(player.SortingOrder, player.Position);
         }
     }
 
@@ -65,8 +89,31 @@ public class ForegroundBackgroundFlip : MonoBehaviour
         var player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
-            FlipZIndex(player.SortingOrder, player.Position);
+            ResetIndex(player.SortingOrder);
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (ShowFlipLine)
+        {
+            var center = new Vector2(transform.position.x, transform.position.y + Offset);
+            var vectors = GetVectors(center, LineWidth, 0, transform.localScale.x);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(vectors[0], vectors[1]);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(center, new Vector3(LineWidth, Range));
+
+        }
+    }
+
+
+    private Vector2[] GetVectors(Vector2 center, float width, float hight, float scale)
+    {
+        var vectors = new Vector2[2];
+        vectors[0] = new Vector2(center.x - ((width/2) * scale), center.y - hight);
+        vectors[1] = new Vector2(center.x + ((width/2) * scale), center.y + hight);
+        return vectors;
+    }
 }

@@ -20,7 +20,7 @@ public class LoadingScreen : Singleton<LoadingScreen>
     }
     private void Update()
     {
-        if (isLoading)
+        if (isLoading && currentLoadingOperation != null)
         {
             SetProgress(currentLoadingOperation.progress);
             if (currentLoadingOperation.isDone)

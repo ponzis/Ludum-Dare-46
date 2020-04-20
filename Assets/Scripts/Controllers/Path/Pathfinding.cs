@@ -7,7 +7,7 @@ public class Pathfinding : Singleton<Pathfinding>
 {
     Grid grid;
 
-    void Awake()
+    private void Awake()
     {
         grid = GetComponent<Grid>();
     }
