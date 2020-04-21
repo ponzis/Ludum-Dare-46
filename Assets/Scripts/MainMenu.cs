@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public string FirstLevel = "Level_1";
+    public string FirstLevel = "Home Scene";
     public void StartGame()
     {
         GameManager.Instance.LoadScene(FirstLevel);
