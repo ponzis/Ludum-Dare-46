@@ -360,6 +360,18 @@ PrefabInstance:
       objectReference: {fileID: 1848604076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77d12fc8ea060404581d285dfc80c06f, type: 3}
+--- !u!114 &1331653560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 361466435257615451, guid: 77d12fc8ea060404581d285dfc80c06f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1331653559}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd1ffb3b73eea644aa20ae6b6eed870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1615303016
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +551,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1691780298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1691780300}
+  - component: {fileID: 1691780299}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1691780299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691780298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21babb9152f0c6e449da665fbff114ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1331653560}
+--- !u!4 &1691780300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691780298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.2695026, y: -3.8040097, z: -974.43134}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1848604076 stripped
 Transform:

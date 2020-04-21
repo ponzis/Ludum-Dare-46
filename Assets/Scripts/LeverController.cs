@@ -23,7 +23,7 @@ public class LeverController : InteractveController
         if (!isDown)
         {
             animator.SetTrigger("Pull Lever");
-            triggered.Trigger(true);
+            triggered?.Trigger(true);
             isDown = true;
         }
     }
