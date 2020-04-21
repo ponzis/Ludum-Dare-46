@@ -6,9 +6,20 @@ public class NewSceneDoor : InteractveController
 {
     public string NextScene;
 
+    [SerializeField]
+    private bool acvtive;
+
+    public override void Trigger(bool state)
+    {
+        acvtive = state;
+    }
+
     protected override void PlayerInRange(PlayerController player)
     {
-        GoToNextScene();
+        if (acvtive)
+        {
+            GoToNextScene();
+        }
     }
 
     private void GoToNextScene()

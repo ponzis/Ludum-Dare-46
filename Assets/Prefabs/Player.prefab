@@ -141,7 +141,7 @@ MonoBehaviour:
     name: 
   DirectionChangeSensitivity: 0.01
   TargetOffset: {x: 0.25, y: 0}
-  Hand: {fileID: 0}
+  Hand: {fileID: 361466435319066177}
   Epsilon: 0.001
   _target: {fileID: 0}
   itemPrefab: {fileID: 7787750193427329757, guid: a33380c0ca10e02498dd4f0ebe385a2a,

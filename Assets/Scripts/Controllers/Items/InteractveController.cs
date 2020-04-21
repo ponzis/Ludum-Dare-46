@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class InteractveController : MonoBehaviour
+public abstract class InteractveController : MonoBehaviour, ITriggerable
 {
     [SerializeField]
     private float SearchRadius = 0.5f;
@@ -53,5 +53,10 @@ public abstract class InteractveController : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(SearchPosition, SearchRadius);
         }
+    }
+
+    public virtual void Trigger(bool state)
+    {
+
     }
 }
